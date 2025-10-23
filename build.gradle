@@ -22,5 +22,7 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        maven { url "https://mirrors.tencent.com/nexus/repository/maven-tencent" }
+        maven { url "https://mirrors.tencent.com/nexus/repository/maven-publc" }
     }
 }
