@@ -1,0 +1,7 @@
+language = C
+headers = hilog/log.h
+
+package = platform.ohos.hilog
+
+compilerOpts = -I${OHOS_NDK_HOME}/sysroot/usr/include
+linkerOpts = -L${OHOS_NDK_HOME}/sysroot/usr/lib -lhilog_ndk.z

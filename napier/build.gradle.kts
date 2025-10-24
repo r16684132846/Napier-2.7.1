@@ -55,6 +55,32 @@ kotlin {
             tvosX64()
         }
     }
+    // 添加OHOS编译目标
+    val ohosSdkHome = System.getenv("OHOS_SDK_HOME") ?: findProperty("OHOS_SDK_HOME")?.toString()
+    val ohosNdkHome = System.getenv("OHOS_NDK_HOME") ?: findProperty("OHOS_NDK_HOME")?.toString() ?: ohosSdkHome?.plus("/native")
+
+    if (ohosSdkHome != null && ohosNdkHome != null) {
+        println("OHOS SDK detected. Enabling OHOS target.")
+        println("OHOS_SDK_HOME: $ohosSdkHome")
+        println("OHOS_NDK_HOME: $ohosNdkHome")
+        ohosArm64() {
+            compilations.getByName("main") {
+                cinterops {
+                    create("hilog") {
+                        defFile = File(projectDir, "src/ohosArm64Main/nativeInterop/cinterop/hilog.def")
+                    }
+                }
+            }
+            binaries {
+                all {
+                    linkerOpts("-lhilog_ndk.z",
+                        "$ohosNdkHome/llvm/lib/aarch64-linux-ohos/libunwind.a")
+                }
+            }
+        }
+    } else {
+        println("OHOS SDK not found. To enable OHOS support, set OHOS_SDK_HOME and OHOS_NDK_HOME environment variables.")
+    }
 
     sourceSets {
         val commonMain by getting {
@@ -99,6 +125,14 @@ kotlin {
             dependencies {
                 implementation(Dep.Test.jvm)
             }
+        }
+
+        // Create OHOS source set
+        val ohosMain by creating {
+            dependsOn(commonMain)
+        }
+        val ohosTest by creating {
+            dependsOn(commonTest)
         }
 
         val darwinMain by creating {
@@ -179,6 +213,16 @@ kotlin {
             val tvosSimulatorArm64Test by getting {
                 dependsOn(darwinTest)
             }
+
+            // OHOS support
+            if (System.getenv("OHOS_SDK_HOME") != null) {
+                val ohosArm64Main by getting {
+                    dependsOn(ohosMain)
+                }
+                val ohosArm64Test by getting {
+                    dependsOn(ohosTest)
+                }
+            }
         } else {
             if (isAppleSilicon) {
                 // apple silicon
@@ -224,6 +268,16 @@ kotlin {
                 val tvosSimulatorArm64Test by getting {
                     dependsOn(darwinTest)
                 }
+
+                // OHOS support
+                if (System.getenv("OHOS_SDK_HOME") != null) {
+                    val ohosArm64Main by getting {
+                        dependsOn(ohosMain)
+                    }
+                    val ohosArm64Test by getting {
+                        dependsOn(ohosTest)
+                    }
+                }
             } else {
                 // intel
                 val macosX64Main by getting {
@@ -249,6 +303,16 @@ kotlin {
                 }
                 val tvosX64Test by getting {
                     dependsOn(darwinTest)
+                }
+
+                // OHOS support
+                if (System.getenv("OHOS_SDK_HOME") != null) {
+                    val ohosArm64Main by getting {
+                        dependsOn(ohosMain)
+                    }
+                    val ohosArm64Test by getting {
+                        dependsOn(ohosTest)
+                    }
                 }
             }
         }
