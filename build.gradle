@@ -1,20 +1,32 @@
 // Can't read dependencies.Dep when using kts
 // https://github.com/gradle/gradle/issues/9270
-import dependencies.Dep
+//import dependencies.Dep
 
 buildscript {
     repositories {
         google()
         mavenCentral()
+        maven { url "https://mirrors.tencent.com/nexus/repository/maven-publc" }
+        maven { url "https://mirrors.tencent.com/nexus/repository/maven-tencent" }
+        mavenLocal()
+        maven {
+            allowInsecureProtocol = true
+            name = "Nenus"
+            setUrl("http://maven.cloud.cicoe.net/repository/kmp/")
+            credentials {
+                username = "kmp2"
+                password = "notekmp1504"
+            }
+        }
     }
 
     dependencies {
-        classpath Dep.GradlePlugin.kotlin
-        classpath Dep.GradlePlugin.android
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.21"
+        classpath "com.android.tools.build:gradle:8.2.0"
 
         // for crashlytics sample
-        classpath Dep.GradlePlugin.crashlytics
-        classpath Dep.GradlePlugin.googleService
+        classpath "com.google.firebase:firebase-crashlytics-gradle:2.5.2"
+        classpath "com.google.gms:google-services:4.3.5"
     }
 }
 
@@ -22,5 +34,17 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        maven { url "https://mirrors.tencent.com/nexus/repository/maven-publc" }
+        maven { url "https://mirrors.tencent.com/nexus/repository/maven-tencent" }
+        mavenLocal()
+        maven {
+            allowInsecureProtocol = true
+            name = "Nenus"
+            setUrl("http://maven.cloud.cicoe.net/repository/kmp/")
+            credentials {
+                username = "kmp2"
+                password = "notekmp1504"
+            }
+        }
     }
 }

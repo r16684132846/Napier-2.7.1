@@ -2,7 +2,7 @@ package dependencies
 
 object Versions {
     const val versionCode = 26
-    const val versionName = "2.7.1"
+    const val versionName = "2.7.1-OHOS-002"
 
     // android
     const val androidVersionCode = 1

@@ -76,19 +76,17 @@ publishing {
 
     repositories {
         maven {
-            name = "Sonatype"
-            url = uri(
-                if (version.toString().endsWith("SNAPSHOT")) {
-                    "https://s01.oss.sonatype.org/content/repositories/snapshots"
-                } else {
-                    "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2"
-                }
-            )
-
+            isAllowInsecureProtocol = true
+            name = "Nenus"
+            setUrl("http://maven.cloud.cicoe.net/repository/kmp/")
             credentials {
-                username = sonatypeUser ?: sonatypeUsernameEnv ?: ""
-                password = sonatypePassword ?: sonatypePasswordEnv ?: ""
+                username = "kmp2"
+                password = "notekmp1504"
             }
+        }
+        maven {
+            name = "Local"
+            url = uri(System.getProperty("user.home") + "/.m2/repository")
         }
     }
 }
