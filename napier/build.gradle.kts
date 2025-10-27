@@ -128,10 +128,10 @@ kotlin {
         }
 
         // Create OHOS source set
-        val ohosMain by creating {
+        val ohosArm64Main by getting {
             dependsOn(commonMain)
         }
-        val ohosTest by creating {
+        val ohosArm64Test by getting {
             dependsOn(commonTest)
         }
 
@@ -213,16 +213,6 @@ kotlin {
             val tvosSimulatorArm64Test by getting {
                 dependsOn(darwinTest)
             }
-
-            // OHOS support
-            if (System.getenv("OHOS_SDK_HOME") != null) {
-                val ohosArm64Main by getting {
-                    dependsOn(ohosMain)
-                }
-                val ohosArm64Test by getting {
-                    dependsOn(ohosTest)
-                }
-            }
         } else {
             if (isAppleSilicon) {
                 // apple silicon
@@ -268,16 +258,6 @@ kotlin {
                 val tvosSimulatorArm64Test by getting {
                     dependsOn(darwinTest)
                 }
-
-                // OHOS support
-                if (System.getenv("OHOS_SDK_HOME") != null) {
-                    val ohosArm64Main by getting {
-                        dependsOn(ohosMain)
-                    }
-                    val ohosArm64Test by getting {
-                        dependsOn(ohosTest)
-                    }
-                }
             } else {
                 // intel
                 val macosX64Main by getting {
@@ -303,16 +283,6 @@ kotlin {
                 }
                 val tvosX64Test by getting {
                     dependsOn(darwinTest)
-                }
-
-                // OHOS support
-                if (System.getenv("OHOS_SDK_HOME") != null) {
-                    val ohosArm64Main by getting {
-                        dependsOn(ohosMain)
-                    }
-                    val ohosArm64Test by getting {
-                        dependsOn(ohosTest)
-                    }
                 }
             }
         }

@@ -1,7 +1,13 @@
-language = C
-headers = hilog/log.h
-
 package = platform.ohos.hilog
+---
 
-compilerOpts = -I${OHOS_NDK_HOME}/sysroot/usr/include
-linkerOpts = -L${OHOS_NDK_HOME}/sysroot/usr/lib -lhilog_ndk.z
+#include <hilog/log.h>
+
+// 包装函数以简化 Kotlin 调用，避免符号冲突
+int OH_LOG_Print_Helper(unsigned int type, unsigned int domain, const char* tag, const char* fmt, const char* msg) {
+    return OH_LOG_Print(LOG_APP, type, domain, tag, fmt, msg);
+}
+
+int OH_LOG_IsLoggable_Helper(const char* tag, unsigned int type) {
+    return OH_LOG_IsLoggable(LOG_APP, tag, type);
+}
