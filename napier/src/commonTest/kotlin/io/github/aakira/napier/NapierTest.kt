@@ -22,7 +22,7 @@ class NapierTest {
     private data class CustomThrowable(override val message: String) : Throwable(message)
 
     @Test
-    fun `Check output log`() {
+    fun checkOutputLog() {
         val output = AtomicMutableList<Expected>()
         Napier.base(object : Antilog() {
             override fun performLog(

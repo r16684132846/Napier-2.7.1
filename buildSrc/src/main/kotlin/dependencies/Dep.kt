@@ -20,7 +20,7 @@ object Dep {
     }
 
     object Coroutines {
-        private const val version = "1.8.0-RC2"
+        private const val version = "1.8.0-OHOS-002"
 
         const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
     }
